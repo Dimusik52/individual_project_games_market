@@ -1,6 +1,9 @@
 Debug/
 .vs/
 
+Scheme.docx
+Functions_of_std_vector.docx
+
 # Prerequisites
 *.d
 
@@ -34,4 +37,3 @@ Debug/
 *.out
 *.app
 
-Scheme.docx
