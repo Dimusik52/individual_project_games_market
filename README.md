@@ -34,6 +34,8 @@
 
 ## Контейнер TVector
 
+[Исследование контейнера std::vector](https://github.com/Dimusik52/individual_project_games_market/source/Functions_of_std_vector.pdf)
+
 ## Схема классов
 
 ![image](https://github.com/Dimusik52/individual_project_games_market/source/Scheme.png)
