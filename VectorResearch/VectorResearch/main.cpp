@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-void print_vector_info(std::vector<int> vec) {
+void print_vector_info(std::vector<int> &vec) {
     std::cout << vec.size() << " " << vec.capacity() << std::endl;
     for (int i = 0; i < vec.size(); i++) {
         std::cout << vec[i] << "(" << &vec[i] << ") ";
