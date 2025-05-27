@@ -1,6 +1,7 @@
 // Copyright (c) 2025 Dmitriy Pikhulya 3824B1PR2
 
 #include <iostream>
+#include <string>
 #include "Games.h"
 #include "User.h"
 #include "GamesStore.h"
@@ -15,8 +16,7 @@ void GamesStore::add_game(User user, std::string name,
     if (user.getUser_Role() == r_admin) {
         Games newgame = Games(name, desc, price);
         _games.push_back(newgame);
-    }
-    else {
+    } else {
         throw std::logic_error("Don`t have permission!");
     }
 }

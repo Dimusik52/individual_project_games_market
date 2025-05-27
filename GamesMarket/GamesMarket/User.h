@@ -2,6 +2,7 @@
 
 #pragma once
 #include <iostream>
+#include <string>
 #include "TVector.h"
 #include "Games.h"
 

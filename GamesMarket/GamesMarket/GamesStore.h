@@ -2,27 +2,27 @@
 
 #pragma once
 #include <iostream>
+#include <string>
 #include "TVector.h"
 #include "User.h"
 #include "Games.h"
 
 class GamesStore {
-	TVector<User> _users;
-	TVector<Games> _games;
+    TVector<User> _users;
+    TVector<Games> _games;
 
- public:
-	 GamesStore();
+public:
+    GamesStore();
 
-	 //admin only
-	 void add_game(User user, std::string name, std::string desc, int price);
+    // admin only
+    void add_game(User user, std::string name, std::string desc, int price);
 
-	 void reg(std::string nickname, std::string login, std::string password);
+    void reg(std::string nickname, std::string login, std::string password);
 
-	 bool login(std::string login, std::string password);
+    bool login(std::string login, std::string password);
 
-	 void save_DB();
+    void save_DB();
 
- private:
-	 void open_DB();
-
+private:
+    void open_DB();
 };
