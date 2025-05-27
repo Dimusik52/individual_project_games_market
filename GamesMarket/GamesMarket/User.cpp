@@ -1,5 +1,6 @@
 // Copyright (c) 2025 Dmitriy Pikhulya 3824B1PR2
 
+#include <string>
 #include "User.h"
 
 User::User() {
@@ -13,7 +14,7 @@ User::User() {
 
 User::User(int user_ID, std::string nickname,
 std::string login, std::string password) {
-    _userID = 0;
+    _userID = user_ID;
     _role = r_user;
     _nickname = nickname;
     _login = login;
