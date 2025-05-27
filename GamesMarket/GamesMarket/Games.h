@@ -13,7 +13,7 @@ class Games {
     std::string _description;
     int _price;
     std::string _price_str;
-    TVector<Comments> comments;
+    TVector<Comments> _comments;
 
  public:
     Games();

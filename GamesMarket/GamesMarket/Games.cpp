@@ -29,7 +29,7 @@ int Games::getPrice() {
 }
 
 void Games::add_comment(Comments comment) {
-    comments.push_back(comment);
+    _comments.push_back(comment);
 }
 
 
