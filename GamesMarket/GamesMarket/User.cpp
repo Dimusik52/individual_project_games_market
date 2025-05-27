@@ -12,8 +12,10 @@ User::User() {
     _money = 0;
 }
 
-User::User(int user_ID, std::string nickname,
-std::string login, std::string password) {
+User::User(int user_ID,
+    std::string nickname,
+    std::string login,
+    std::string password) {
     _userID = user_ID;
     _role = r_user;
     _nickname = nickname;

@@ -36,5 +36,4 @@ class User {
     std::string getUser_Login();
     std::string getUser_Password();
     Roles getUser_Role();
-
 };

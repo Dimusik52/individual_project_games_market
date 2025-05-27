@@ -11,7 +11,7 @@ class GamesStore {
     TVector<User> _users;
     TVector<Games> _games;
 
-public:
+ public:
     GamesStore();
 
     // admin only
@@ -23,6 +23,6 @@ public:
 
     void save_DB();
 
-private:
+ private:
     void open_DB();
 };

@@ -27,5 +27,4 @@ class Games {
 
  private:
     std::string parse_price() inline;
-
 };
