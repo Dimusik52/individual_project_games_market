@@ -1,11 +1,12 @@
+// Copyright (c) 2025 Dmitriy Pikhulya 3824B1PR2
+
 #pragma once
 #include <iostream>
 #include "TVector.h"
 #include "User.h"
 #include "Games.h"
 
-class GamesStore
-{
+class GamesStore {
 	TVector<User> _users;
 	TVector<Games> _games;
 
@@ -25,4 +26,3 @@ class GamesStore
 	 void open_DB();
 
 };
-
