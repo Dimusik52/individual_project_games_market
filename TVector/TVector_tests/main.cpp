@@ -30,8 +30,7 @@ void start_test(bool(*test)(), const char* name_of_test) {
         set_color(2, 0);
         std::cout << "[       OK ]\n" << std::endl;
         count_success++;
-    }
-    else {
+    } else {
         set_color(4, 0);
         std::cout << "[  FAILED  ]\n" << std::endl;
         count_failed++;
