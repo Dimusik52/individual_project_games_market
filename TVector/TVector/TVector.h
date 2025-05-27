@@ -16,7 +16,7 @@ template<class T> class TVector {
     int _size = 0;
     int _capacity = CAPACITY;
 
-public:
+ public:
     // Constructors
     TVector();
     explicit TVector(int);
@@ -71,7 +71,7 @@ public:
     bool operator!=(const TVector<T>&) const;
     T& operator[](int) const;
 
-private:
+ private:
     size_t _deleted = 0;
     State* _states = nullptr;
     void effective_deletion();
@@ -94,8 +94,7 @@ template<class T> TVector<T>::TVector(int size) {
         _data = new T[_capacity];
         _states = new State[_capacity];
         for (int i = 0; i < _capacity; i++) _states[i] = empty;
-    }
-    else {
+    } else {
         _capacity = size + CAPACITY;
         _data = new T[_capacity];
         _states = new State[_capacity];
@@ -340,8 +339,7 @@ template<class T> void TVector<T>::pop_front() {
     }
     if (index == _size - 1) {
         pop_back();
-    }
-    else {
+    } else {
         _states[index] = deleted;
         _deleted++;
     }
@@ -452,16 +450,14 @@ template<class T> void TVector<T>::resize(int new_size, bool toFill) {
             if (_states[i] == busy) cnt++;
         }
         _size = cnt;
-    }
-    else {
+    } else {
         if (new_size >= _capacity) reserve(new_size + CAPACITY);
         if (toFill == true) {
             for (int i = _size; i < new_size; i++) {
                 _states[i] = busy;
                 _data[i] = _data[_size - 1];
             }
-        }
-        else {
+        } else {
             for (int i = _size; i < new_size; i++) _states[i] = busy;
         }
         _size = new_size;
@@ -560,8 +556,7 @@ template <class T> int find_all(const TVector<T>& vector, const T& value) {
     if (size_res == 0) {
         result = new int[1];
         result[0] = INT_MIN;
-    }
-    else {
+    } else {
         result = new int[size_res];
         for (int i = 0, j = 0; j < size_res; i++) {
             if (vector.at(i) == value) {
