@@ -253,6 +253,9 @@ bool test_2_push_front_empty() {
 bool test_3_push_front_capacity_overflow() {
     bool expected_result = true;
     TVector<int> empty1;
+    for (int i = 0; i < 15; i++) {
+        empty1.push_front(5);
+    }
     bool actual_result = (empty1.capacity() == 30);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -426,6 +429,19 @@ bool test_3_erase_to_empty() {
     return TestSystem::check(expected_result, actual_result);
 }
 
+bool test_4_erase_big_vec() {
+    bool expected_result = true;
+    TVector<int> vec1, vec2;
+    for (int i = 0; i < 1000; i++) {
+        vec1.push_back(i);
+        if (i > 1) vec2.push_back(i);
+    }
+    vec1.erase(0);
+    vec1.erase(0);
+    bool actual_result = (vec1 == vec2);
+    return TestSystem::check(expected_result, actual_result);
+}
+
 bool test_1_clear() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3, 4, 5 }), empty1;
@@ -525,12 +541,12 @@ bool test_1_shuffle_and_sorting() {
 // Searches
 bool test_1_searches() {
     bool expected_result = true;
+    bool actual_result = true;
     TVector<int> vec1({ -11, 2, 7, 2, 5, 2, 7, 2, 5, 110 });
-    std::cout << "First 5 index elem = " << find_first(vec1, 5) << std::endl;
-    std::cout << "Last 7 index elem = " << find_last(vec1, 7) << std::endl;
-    // std::cout << "Find 2 indeces elems = " << find_all(vec1, 2) << std::endl;
-    std::cout << "Failed search = " << find_first(vec1, -1) << std::endl;
-
+    if (find_first(vec1, 5) != 4) actual_result = false;
+    if (find_last(vec1, 7) != 6) actual_result = false;
+    if (find_all(vec1, 2) == new int[5] { 1, 3, 5, 7, 8 }) actual_result = false;
+    if (find_first(vec1, -1) < 0 || find_first(vec1, -1) > 9) actual_result = false;
     return true;
 }
 
@@ -589,8 +605,8 @@ int main() {
     TestSystem::start_test(test_1_push_back, "test_1_push_back");
     TestSystem::start_test(test_2_push_back_empty,
         "test_2_push_back_empty");
-    TestSystem::start_test(test_3_push_front_capacity_overflow,
-        "test_3_push_front_capacity_overflow");
+    TestSystem::start_test(test_3_push_back_capacity_overflow,
+        "test_3_push_back_capacity_overflow");
 
     //    insert()
     TestSystem::start_test(test_1_insert_to_invalid_index,
@@ -617,6 +633,8 @@ int main() {
     TestSystem::start_test(test_2_erase, "test_2_erase");
     TestSystem::start_test(test_3_erase_to_empty,
         "test_3_erase_to_empty");
+    TestSystem::start_test(test_4_erase_big_vec,
+        "test_4_erase_big_vec");
 
     //    clear()
     TestSystem::start_test(test_1_clear, "test_1_clear");
