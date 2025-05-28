@@ -402,7 +402,7 @@ bool test_1_erase_to_invalid_index() {
     return TestSystem::check(expected_result, actual_result);
 }
 
-// Еще один тест на большой размер
+// +1 test on big size
 bool test_2_erase() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3, 4, 5 }), vec2({ 1, 4, 5 });
