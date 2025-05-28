@@ -68,6 +68,7 @@ template<class T> class TVector {
     // Operators overload
     void operator=(const TVector<T>&);
     bool operator==(const TVector<T>&) const;
+    bool operator==(const int*) const;
     bool operator!=(const TVector<T>&) const;
     T& operator[](int) const;
 
@@ -313,16 +314,22 @@ template<class T> void TVector<T>::insert(int index, const T& value) {
     if (index >= size() || index < 0) {
         throw std::out_of_range("Index out of range");
     }
-    if (_states[index] == busy) {
-        _size++;
-        if (is_full()) reserve(_size + CAPACITY);
-        for (int i = _size; i > index; i--) {
-            _data[i] = _data[i - 1];
-            _states[i] = _states[i - 1];
+    int real_index = -1, cnt;
+    for (int i = 0; i < _size; i++) {
+        if (_states[i] == busy || _states[i] == empty) real_index++;
+        if (real_index == index) {
+            cnt = i;
+            break;
         }
     }
-    _data[index] = value;
-    _states[index] = busy;
+    _size++;
+    if (is_full()) reserve(_size + CAPACITY);
+    for (int i = _size; i > real_index; i--) {
+        _data[i] = _data[i - 1];
+        _states[i] = _states[i - 1];
+    }
+    _data[real_index] = value;
+    _states[real_index] = busy;
 }
 
 // Deletion functions
@@ -337,12 +344,8 @@ template<class T> void TVector<T>::pop_front() {
             break;
         }
     }
-    if (index == _size - 1) {
-        pop_back();
-    } else {
-        _states[index] = deleted;
-        _deleted++;
-    }
+    _states[index] = deleted;
+    _deleted++;
     if (_deleted >= static_cast<int>(_size * DELETED_LIMIT)) {
         effective_deletion();
     }
@@ -479,6 +482,14 @@ template <class T> bool TVector<T>::operator==(const TVector<T>& other) const {
     return true;
 }
 
+template <class T> bool TVector<T>::operator==(const int* other) const {
+    if (size() != std::size(other)) return false;
+    for (int i = 0; i < size(); i++) {
+        if (at(i) != other[i]) return false;
+    }
+    return true;
+}
+
 template <class T> bool TVector<T>::operator!=(const TVector<T>& other) const {
     return !(*this == other);
 }
@@ -546,7 +557,7 @@ template <class T> int find_last(const TVector<T>& vector, const T& value) {
     return INT_MAX;
 }
 
-template <class T> int find_all(const TVector<T>& vector, const T& value) {
+template <class T> int* find_all(const TVector<T>& vector, const T& value) {
     if (vector.size() == 0) throw std::logic_error("The size is 0!");
     int* result = nullptr, size_res = 0;
     for (int i = 0; i < vector.size(); i++) {
