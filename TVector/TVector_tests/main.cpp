@@ -545,9 +545,9 @@ bool test_1_searches() {
     TVector<int> vec1({ -11, 2, 7, 2, 5, 2, 7, 2, 5, 110 });
     if (find_first(vec1, 5) != 4) actual_result = false;
     if (find_last(vec1, 7) != 6) actual_result = false;
-    if (find_all(vec1, 2) == new int[5] { 1, 3, 5, 7, 8 }) 
+    if (find_all(vec1, 2) == new int[5] { 1, 3, 5, 7, 8 })
         actual_result = false;
-    if (find_first(vec1, -1) < 0 || find_first(vec1, -1) > 9) 
+    if (find_first(vec1, -1) < 0 || find_first(vec1, -1) > 9)
         actual_result = false;
     return true;
 }
