@@ -1,14 +1,8 @@
 // Copyright (c) 2025 Dmitriy Pikhulya 3824B1PR2
+
 #include <windows.h>
 #include <iostream>
 #include "TVector.h"
-
-template <class T> void info(const TVector<T>& mass) {
-    std::cout << "Size is " << mass.size() << std::endl;
-    std::cout << "Capacity is " << mass.capacity() << std::endl;
-    std::cout << "Deleted is " << mass.deleted_count() << std::endl;
-    mass.service_print();
-}
 
 void set_color(int text_color, int bg_color) {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -82,7 +76,6 @@ bool test_1_empty_constructor() {
     TVector<int> empty1, fake_empty(0);
     bool expected_result = true;
     bool actual_result = (empty1 == fake_empty);
-    info(empty1);
     return TestSystem::check(expected_result, actual_result);
 }
 
@@ -104,7 +97,6 @@ bool test_1_size_constructor() {
     TVector<int> vec1(10), vec2(10);
     bool expected_result = true;
     bool actual_result = (vec1 == vec2);
-    info(vec1);
     return TestSystem::check(expected_result, actual_result);
 }
 
@@ -128,7 +120,6 @@ bool test_1_sizedata_constructor() {
     TVector<int> vec1(10, arr), vec2(10, arr);
     bool expected_result = true;
     bool actual_result = (vec1 == vec2);
-    info(vec1);
     return TestSystem::check(expected_result, actual_result);
 }
 
@@ -152,7 +143,6 @@ bool test_2_sizedata_constructor_params() {
 bool test_1_init_constructor() {
     int arr[5] = { 1, 2, 3, 4, 5 };
     TVector<int> vec1({ 1, 2, 3, 4, 5 }), vec2(5, arr);
-    info(vec1);
     bool expected_result = true;
     bool actual_result = (vec1 == vec2);
     return TestSystem::check(expected_result, actual_result);
@@ -161,7 +151,6 @@ bool test_1_init_constructor() {
 bool test_1_initsize_constructor_params() {
     int arr[2] = { 1, 2 };
     TVector<int> vec1(2, { 1, 2, 3, 4, 5 }), vec2(2, arr);
-    info(vec1);
     bool expected_result = true;
     bool actual_result = (vec1 == vec2);
     return TestSystem::check(expected_result, actual_result);
@@ -175,7 +164,6 @@ bool test_1_copy_constructor() {
     TVector<int> vec2(vec1);
     bool expected_result = true;
     bool actual_result = (vec1 == vec2);
-    info(vec2);
     return TestSystem::check(expected_result, actual_result);
 }
 
@@ -214,11 +202,6 @@ bool test_1_at() {
     vec1.pop_back();
     vec1.pop_back();
     vec1.erase(2);
-    info(vec1);
-    for (int i = 0; i < vec1.size(); i++) {
-        std::cout << "at(" << i << ") = " << vec1.at(i) << "; ";
-    }
-    std::cout << std::endl;
     bool actual_result = (vec1 == vec2);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -232,8 +215,6 @@ bool test_2_at_empty() {
         actual_result = true;
     }
     catch (const std::exception& e) {
-        std::cerr << "An exception has been triggered! "
-            << e.what() << std::endl;
         actual_result = false;
     }
     return TestSystem::check(expected_result, actual_result);
@@ -242,9 +223,7 @@ bool test_2_at_empty() {
 bool test_3_at_assign() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3 });
-    std::cout << "Original vec1[1] = " << vec1[1] << std::endl;
     vec1[1] = -4;
-    std::cout << "After assignment -4. vec1[1] = " << vec1[1] << std::endl;
     if (vec1[1] == -4) return true;
     else return false;
 }
@@ -253,14 +232,11 @@ bool test_1_push_front() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3, 4, 5 });
     TVector<int> vec2({ -5, -4, -3, -2, -1, 1, 2, 3, 4, 5 });
-    info(vec1);
     vec1.push_front(-1);
     vec1.push_front(-2);
     vec1.push_front(-3);
     vec1.push_front(-4);
     vec1.push_front(-5);
-    std::cout << "\nAfter doing push_front() 5 times:\n";
-    info(vec1);
     bool actual_result = (vec1 == vec2);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -270,8 +246,6 @@ bool test_2_push_front_empty() {
     TVector<int> empty1;
     empty1.push_front(5);
     empty1.push_front(5);
-    std::cout << "After doing push_front(5) 2 times to empty:\n";
-    info(empty1);
     bool actual_result = (empty1[0] == 5 && empty1[1] == 5);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -279,13 +253,6 @@ bool test_2_push_front_empty() {
 bool test_3_push_front_capacity_overflow() {
     bool expected_result = true;
     TVector<int> empty1;
-    std::cout << "Before doing capacity overflow:\n";
-    info(empty1);
-    for (int i = 0; i < 15; i++) {
-        empty1.push_front(5);
-    }
-    std::cout << "\nAfter doing capacity overflow:\n";
-    info(empty1);
     bool actual_result = (empty1.capacity() == 30);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -297,7 +264,6 @@ bool test_4_push_front_to_deleted() {
     vec1.pop_front();
     vec1.push_front(5);
     vec1.push_front(5);
-    info(vec1);
     bool actual_result = ((vec1 == vec2));
     return TestSystem::check(expected_result, actual_result);
 }
@@ -306,14 +272,11 @@ bool test_1_push_back() {
     bool expected_result = true;
     TVector<int> vec1({ -5, -4, -3, -2, -1 });
     TVector<int> vec2({ -5, -4, -3, -2, -1, 1, 2, 3, 4, 5 });
-    info(vec1);
     vec1.push_back(1);
     vec1.push_back(2);
     vec1.push_back(3);
     vec1.push_back(4);
     vec1.push_back(5);
-    std::cout << "\nAfter doing push_back() 5 times:\n";
-    info(vec1);
     bool actual_result = (vec1 == vec2);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -323,8 +286,6 @@ bool test_2_push_back_empty() {
     TVector<int> empty1;
     empty1.push_back(5);
     empty1.push_back(5);
-    std::cout << "After doing push_back(5) 2 times to empty:\n";
-    info(empty1);
     bool actual_result = (empty1[0] == 5 && empty1[1] == 5);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -332,13 +293,9 @@ bool test_2_push_back_empty() {
 bool test_3_push_back_capacity_overflow() {
     bool expected_result = true;
     TVector<int> empty1;
-    std::cout << "Before doing capacity overflow:\n";
-    info(empty1);
     for (int i = 0; i < 15; i++) {
         empty1.push_back(5);
     }
-    std::cout << "\nAfter doing capacity overflow:\n";
-    info(empty1);
     bool actual_result = (empty1.capacity() == 30);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -352,8 +309,6 @@ bool test_1_insert_to_invalid_index() {
         actual_result = true;
     }
     catch (const std::exception& e) {
-        std::cerr << "An exception has been triggered! "
-            << e.what() << std::endl;
         actual_result = false;
     }
     return TestSystem::check(expected_result, actual_result);
@@ -364,7 +319,6 @@ bool test_2_insert() {
     TVector<int> vec1({ 1, 2, 3, 4 }), vec2({ 1, 5, 2, 3, 5, 4 });
     vec1.insert(1, 5);
     vec1.insert(4, 5);
-    info(vec1);
     bool actual_result = (vec1 == vec2);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -374,7 +328,6 @@ bool test_3_insert_to_empty() {
     TVector<int> empty1;
     empty1.insert(0, 5);
     empty1.insert(0, -1);
-    info(empty1);
     bool actual_result = (empty1[0] == -1 && empty1[1] == 5);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -382,13 +335,9 @@ bool test_3_insert_to_empty() {
 bool test_4_insert_capacity_overflow() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 0 });
-    std::cout << "Before doing capacity overflow:\n";
-    info(vec1);
     for (int i = 0; i < 15; i++) {
         vec1.insert(1, 5);
     }
-    std::cout << "\nAfter doing capacity overflow:\n";
-    info(vec1);
     bool actual_result = (vec1.capacity() == 32);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -396,11 +345,8 @@ bool test_4_insert_capacity_overflow() {
 bool test_1_pop_front() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3, 4, 5 }), vec2({ 3, 4, 5 });
-    info(vec1);
     vec1.pop_front();
     vec1.pop_front();
-    std::cout << "\nAfter doing pop_front() 2 times:\n";
-    info(vec1);
     bool actual_result = (vec1 == vec2);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -414,8 +360,6 @@ bool test_2_pop_front_to_empty() {
         actual_result = true;
     }
     catch (const std::exception& e) {
-        std::cerr << "An exception has been triggered! "
-            << e.what() << std::endl;
         actual_result = false;
     }
     return TestSystem::check(expected_result, actual_result);
@@ -424,11 +368,8 @@ bool test_2_pop_front_to_empty() {
 bool test_1_pop_back() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3, 4, 5 }), vec2({ 1, 2, 3 });
-    info(vec1);
     vec1.pop_back();
     vec1.pop_back();
-    std::cout << "\nAfter doing pop_back() 2 times:\n";
-    info(vec1);
     bool actual_result = (vec1 == vec2);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -442,8 +383,6 @@ bool test_2_pop_back_to_empty() {
         actual_result = true;
     }
     catch (const std::exception& e) {
-        std::cerr << "An exception has been triggered! "
-            << e.what() << std::endl;
         actual_result = false;
     }
     return TestSystem::check(expected_result, actual_result);
@@ -458,19 +397,17 @@ bool test_1_erase_to_invalid_index() {
         actual_result = true;
     }
     catch (const std::exception& e) {
-        std::cerr << "An exception has been triggered! "
-            << e.what() << std::endl;
         actual_result = false;
     }
     return TestSystem::check(expected_result, actual_result);
 }
 
+// Еще один тест на большой размер
 bool test_2_erase() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3, 4, 5 }), vec2({ 1, 4, 5 });
     vec1.erase(1);
     vec1.erase(1);
-    info(vec1);
     bool actual_result = (vec1 == vec2);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -484,8 +421,6 @@ bool test_3_erase_to_empty() {
         actual_result = true;
     }
     catch (const std::exception& e) {
-        std::cerr << "An exception has been triggered! "
-            << e.what() << std::endl;
         actual_result = false;
     }
     return TestSystem::check(expected_result, actual_result);
@@ -494,11 +429,7 @@ bool test_3_erase_to_empty() {
 bool test_1_clear() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3, 4, 5 }), empty1;
-    std::cout << "Before clear():\n";
-    info(vec1);
     vec1.clear();
-    std::cout << "\nAfter clear():\n";
-    info(vec1);
     bool actual_result = (vec1 == empty1);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -510,11 +441,7 @@ bool test_1_shrink_to_fit_ln() {
         vec1.erase(1);
     }
     vec1.erase(vec1.size() - 2);
-    std::cout << "Before shrink_to_fit():\n";
-    info(vec1);
     vec1.shrink_to_fit();
-    std::cout << "\nAfter shrink_to_fit():\n";
-    info(vec1);
     bool actual_result = (vec1.size() == vec1.capacity());
     return TestSystem::check(expected_result, actual_result);
 }
@@ -523,7 +450,6 @@ bool test_1_reserve() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3, 4, 5 });
     vec1.reserve(30);
-    info(vec1);
     bool actual_result = (vec1.size() == 5 && vec1.capacity() == 30);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -532,7 +458,6 @@ bool test_2_reserve_lts() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3, 4, 5 });
     vec1.reserve(4);
-    info(vec1);
     bool actual_result = (vec1.size() == 5 && vec1.capacity() == 20);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -541,7 +466,6 @@ bool test_1_resize_shrink() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3, 4, 5 });
     vec1.resize(2, 0);
-    info(vec1);
     bool actual_result = (vec1.size() == 2);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -550,7 +474,6 @@ bool test_1_resize_enlarge_no_filler() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3, 4, 5 });
     vec1.resize(8, 0);
-    info(vec1);
     bool actual_result = (vec1.size() == 8);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -559,7 +482,6 @@ bool test_1_resize_enlarge_with_filler() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3, 4, -11 });
     vec1.resize(8, 1);
-    info(vec1);
     bool actual_result = (vec1.size() == 8 && vec1[6] == -11);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -567,11 +489,7 @@ bool test_1_resize_enlarge_with_filler() {
 bool test_1_emplace() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3, 4, 5 }), vec2({ 2, 2, 2, 2, 2 });
-    std::cout << "Before emplace() all to 2:\n";
-    info(vec1);
     for (int i = 0; i < vec1.size(); i++) vec1.emplace(i, 2);
-    std::cout << "\nAfter emplace() all to 2:\n";
-    info(vec1);
     bool actual_result = (vec1 == vec2);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -580,7 +498,6 @@ bool test_1_assign_empty() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3, 4 }), empty1;
     vec1 = empty1;
-    info(vec1);
     bool actual_result = (vec1 == empty1);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -589,7 +506,6 @@ bool test_2_assign() {
     bool expected_result = true;
     TVector<int> vec1({ 1, 2, 3, 4 }), vec2({ 37, 55, -19, 0, 0, 12 });
     vec1 = vec2;
-    info(vec1);
     bool actual_result = (vec1 == vec2);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -601,9 +517,7 @@ bool test_1_shuffle_and_sorting() {
     TVector<int> vec1({ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
     TVector<int> vec2({ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
     fisherYatesShuffle(vec1);
-    info(vec1);
     hoara_sort(vec1, 0, vec1.size() - 1);
-    info(vec1);
     bool actual_result = (vec1 == vec2);
     return TestSystem::check(expected_result, actual_result);
 }
@@ -612,7 +526,6 @@ bool test_1_shuffle_and_sorting() {
 bool test_1_searches() {
     bool expected_result = true;
     TVector<int> vec1({ -11, 2, 7, 2, 5, 2, 7, 2, 5, 110 });
-    info(vec1);
     std::cout << "First 5 index elem = " << find_first(vec1, 5) << std::endl;
     std::cout << "Last 7 index elem = " << find_last(vec1, 7) << std::endl;
     // std::cout << "Find 2 indeces elems = " << find_all(vec1, 2) << std::endl;
